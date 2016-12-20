@@ -3,7 +3,6 @@ package info.devexchanges.firebasechatapplication;
 import java.util.Date;
 
 public class ChatMessage {
-
     private String messageText;
     private String messageUser;
     private String messageUserId;

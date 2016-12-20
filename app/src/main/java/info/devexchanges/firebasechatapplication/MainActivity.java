@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //find views by Ids
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         final EditText input = (EditText) findViewById(R.id.input);
         listView = (ListView) findViewById(R.id.list);
@@ -42,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
                     .build(), SIGN_IN_REQUEST_CODE);
         } else {
             // User is already signed in, show list of messages
-            displayChatMessages();
+            showAllOldMessages();
         }
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -77,11 +78,7 @@ public class MainActivity extends AppCompatActivity {
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
-                            Toast.makeText(MainActivity.this,
-                                    "You have logged out!",
-                                    Toast.LENGTH_LONG)
-                                    .show();
-
+                            Toast.makeText(MainActivity.this, "You have logged out!", Toast.LENGTH_SHORT).show();
                             finish();
                         }
                     });
@@ -96,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == SIGN_IN_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 Toast.makeText(this, "Signed in successful!", Toast.LENGTH_LONG).show();
-                displayChatMessages();
+                showAllOldMessages();
             } else {
                 Toast.makeText(this, "Sign in failed, please try again later", Toast.LENGTH_LONG).show();
 
@@ -104,10 +101,9 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         }
-
     }
 
-    private void displayChatMessages() {
+    private void showAllOldMessages() {
         loggedInUserName = FirebaseAuth.getInstance().getCurrentUser().getUid();
         Log.d("Main", "user id: " + loggedInUserName);
 
